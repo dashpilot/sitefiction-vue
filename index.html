@@ -22,9 +22,6 @@
 
 <body spellcheck="false">
 
-
-
-
   <div id="sitefiction">
 
 
@@ -53,15 +50,10 @@
           <div class="alert alert-warning">Click on text or images to edit</div>
         </span>
 
-
-        <!--
-        <span v-for="layout in layouts">
-          <img :src="theme+'components/'+layout+'/preview.jpg'" class="img-fluid sf-brdr" v-on:click="addItem(layout)" />
-        </span>
-      -->
-
       </div>
       <div class="col-10" id="sf-content">
+
+
         <div id="sf-nav" class="sf-box">
 
           <span v-if="nav">
@@ -98,17 +90,7 @@
             <div v-html="item"></div>
           </div>
 
-
           <div v-if="items.length == 0" class="text-center"><img src="assets/img/empty.png" id="empty" /></div>
-
-
-          <!--
-          <span v-for="item in items">
-            <span v-if="item == 'mast-head'">
-              <mast-head v-bind:editing="editing"></mast-head>
-            </span>
-          </span>
-          -->
 
         </div>
 
@@ -134,11 +116,6 @@
         layouts: [],
         items: []
       },
-      /*
-      components: {
-        'mast-head': httpVueLoader('themes/landing-page/components/mast-head/index.vue'),
-      },
-      */
       methods: {
         addItem(layout) {
           let el = document.getElementById(layout);
@@ -151,7 +128,6 @@
           } else {
             this.items.unshift(mylayout);
           }
-
         },
         deleteItem(e) {
           let element = e.target.closest('.editable');
@@ -196,8 +172,6 @@
             }, 5);
 
           });
-
-
       }
 
     });

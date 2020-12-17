@@ -16,6 +16,7 @@ body{
 
 #sf-page{
   height: 100%;
+  width: 100%;
 }
 
 #sf-topbar{
@@ -226,4 +227,8 @@ label{
 }
 .switch + .switch {
   margin-left: 1rem;
+}
+
+.form-group{
+  margin-bottom: 0;
 }
