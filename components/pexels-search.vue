@@ -3,6 +3,10 @@
 <span v-if="edit_img">
 
 <div id="pexels-search">
+
+<div class="label">Image URL</div>
+<input type="text" class="form-control mb-3" v-on:keyup="setImageUrl">
+
 <div class="label">Pexels Image Search.</div>
 <div class="input-group">
   <input type="text" class="form-control" placeholder="e.g. mountain" v-model="query" id="query">
@@ -75,7 +79,15 @@ module.exports = {
         } else {
           target.style.backgroundImage = 'url(' + url + ')';
         }
-
+      },
+      setImageUrl(e) {
+        let url = e.target.value;
+        let target = this.edit_img;
+        if (target.tagName == 'IMG') {
+          target.src = url;
+        } else {
+          target.style.backgroundImage = 'url(' + url + ')';
+        }
       }
     },
     mounted: function(){
