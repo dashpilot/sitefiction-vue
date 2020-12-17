@@ -31,6 +31,7 @@ body{
   border-right: 1px solid #DDD;
   height: 100%;
   padding: 15px;
+  overflow-y: auto;
 }
 
 #sf-content{
@@ -81,6 +82,13 @@ body{
   margin-top: 150px;
 }
 
+.label{
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 8px;
+}
+
 .sf-edit-btns{
   position: absolute;
   top: 0;
@@ -104,6 +112,16 @@ body{
 .editable{
   position: relative;
 }
+
+.editing .edit-bg, .editing .edit{
+  border: 1px solid transparent;
+}
+
+.editing .edit-bg:hover, .editing .edit:hover{
+  border: 1px solid lightblue;
+  cursor: pointer;
+}
+
 
 /*---- Switch ----*/
 
