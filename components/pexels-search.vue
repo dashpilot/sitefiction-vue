@@ -7,7 +7,7 @@
 <div class="label">Image URL</div>
 <input type="text" class="form-control mb-3" v-on:keyup="setImageUrl">
 
-<div class="label">Pexels Image Search.</div>
+<div class="label">Pexels Image Search</div>
 <div class="input-group">
   <input type="text" class="form-control" placeholder="e.g. mountain" v-model="query" id="query">
   <div class="input-group-append">

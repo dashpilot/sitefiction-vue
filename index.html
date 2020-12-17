@@ -26,14 +26,24 @@
 
 
     <div id="sf-topbar">
-      <img src="/assets/img/title.png" id="sf-logo" />
 
-      <div class="form-group float-right">
-        <span class="switch">
-          <label id="label-layout">Layout</label>
-          <input type="checkbox" class="switch" id="switch-normal" v-on:click="toggleMode">
-          <label for="switch-normal">Content</label>
-        </span>
+      <div class="row no-gutters">
+
+        <div class="col-3">
+          <img src="/assets/img/title.png" id="sf-logo" />
+        </div>
+
+        <div class="col-6 text-center">
+          <div class="form-group">
+            <span class="switch">
+              <label id="label-layout">Layout</label>
+              <input type="checkbox" class="switch" id="switch-normal" v-on:click="toggleMode">
+              <label for="switch-normal">Content</label>
+            </span>
+          </div>
+        </div>
+
+        <div class="col-3"></div>
       </div>
 
     </div>

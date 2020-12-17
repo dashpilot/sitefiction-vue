@@ -21,7 +21,7 @@ body{
 
 #sf-topbar{
 	padding: 12px;
-	padding-bottom: 16px;
+	padding-bottom: 12px;
 	background-color: white;
 	border-bottom: 1px solid #DDD;
 }
@@ -134,9 +134,7 @@ body{
 /*---- Switch ----*/
 
 label#label-layout{
-  position: absolute;
-  top: -3px;
-  right: 135px;
+margin-right: 10px;
 }
 
 label{
@@ -256,5 +254,9 @@ label{
 }
 
 .form-group{
+  margin-bottom: 0;
+}
+
+label{
   margin-bottom: 0;
 }
