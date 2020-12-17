@@ -3,7 +3,7 @@
 <span v-if="edit_img">
 
 <div id="pexels-search">
-<div class="label">Pexels Image Search</div>
+<div class="label">Pexels Image Search.</div>
 <div class="input-group">
   <input type="text" class="form-control" placeholder="e.g. mountain" v-model="query" id="query">
   <div class="input-group-append">
@@ -80,7 +80,7 @@ module.exports = {
     },
     mounted: function(){
       this.photos = [];
-      document.querySelector('#pexels-search').addEventListener('keypress', function (e) {
+      document.body.addEventListener('keypress', function (e) {
           if (e.key === 'Enter') {
             document.querySelector('#query-search').click();
           }
