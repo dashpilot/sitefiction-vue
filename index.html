@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+
+  <link href="assets/style.css" rel="stylesheet" />
+
+  <script src="https://unpkg.com/vue"></script>
+  <!-- <script src="https://unpkg.com/http-vue-loader"></script> -->
+
+  <script type="module" src="https://unpkg.com/@deckdeckgo/inline-editor@latest/dist/deckdeckgo-inline-editor/deckdeckgo-inline-editor.esm.js"></script>
+
+  <link href="themes/landing-page/css/landing-page.css" rel="stylesheet" />
+  <link href="themes/landing-page/vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" type="text/css">
+  <link href="fonts/Lato.css" rel="stylesheet" />
+</head>
+
+<body spellcheck="false">
+
+
+
+
+  <div id="sitefiction">
+
+
+    <div id="sf-topbar">
+      <img src="/assets/img/title.png" id="sf-logo" />
+
+      <div class="form-group float-right">
+        <span class="switch">
+          <label id="label-layout">Layout</label>
+          <input type="checkbox" class="switch" id="switch-normal" v-on:click="toggleMode">
+          <label for="switch-normal">Content</label>
+        </span>
+      </div>
+
+    </div>
+
+    <div class="row no-gutters" id="sf-page">
+      <div class="col-2" id="sf-side">
+
+        <span v-if="editing == false">
+          <span v-for="layout in layouts">
+            <img :src="theme+'previews/'+layout+'.jpg'" class="img-fluid sf-brdr" v-on:click="addItem(layout)" />
+          </span>
+        </span>
+        <span v-else>
+          <div class="alert alert-warning">Click on text or images to edit</div>
+        </span>
+
+
+        <!--
+        <span v-for="layout in layouts">
+          <img :src="theme+'components/'+layout+'/preview.jpg'" class="img-fluid sf-brdr" v-on:click="addItem(layout)" />
+        </span>
+      -->
+
+      </div>
+      <div class="col-10" id="sf-content">
+        <div id="sf-nav" class="sf-box">
+
+          <span v-if="nav">
+            <div v-html="nav"></div>
+          </span>
+
+        </div>
+        <div id="sf-header" class="sf-box">
+
+          <span v-if="header">
+            <div v-html="header"></div>
+          </span>
+
+        </div>
+
+        <div id="sf-main" class="sf-box">
+
+
+          <div class="editable" v-for="item in items">
+            <div v-if="editing == false" class="sf-edit-btns">
+              <div class="sf-edit-btn" v-on:click="moveDown">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                  <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                </svg>
+              </div>
+              <div class="sf-edit-btn" v-on:click="deleteItem">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                  <path fill-rule="evenodd"
+                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                </svg>
+              </div>
+            </div>
+            <div v-html="item"></div>
+          </div>
+
+
+          <div v-if="items.length == 0" class="text-center"><img src="assets/img/empty.png" id="empty" /></div>
+
+
+          <!--
+          <span v-for="item in items">
+            <span v-if="item == 'mast-head'">
+              <mast-head v-bind:editing="editing"></mast-head>
+            </span>
+          </span>
+          -->
+
+        </div>
+
+        <br><br> <br><br>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div id="layouts"></div>
+
+  <deckgo-inline-editor background-color="false" align="false"></deckgo-inline-editor>
+
+  <script type="text/javascript">
+    new Vue({
+      el: '#sitefiction',
+      data: {
+        editing: false,
+        theme: 'themes/landing-page/',
+        header: false,
+        nav: false,
+        layouts: [],
+        items: []
+      },
+      /*
+      components: {
+        'mast-head': httpVueLoader('themes/landing-page/components/mast-head/index.vue'),
+      },
+      */
+      methods: {
+        addItem(layout) {
+          let el = document.getElementById(layout);
+          let cat = el.getAttribute('data-category');
+          let mylayout = el.innerHTML;
+          if (cat == 'headers') {
+            this.header = mylayout;
+          } else if (cat == 'navs') {
+            this.nav = mylayout;
+          } else {
+            this.items.unshift(mylayout);
+          }
+
+        },
+        deleteItem(e) {
+          let element = e.target.closest('.editable');
+          let r = confirm('Are you sure you want to delete this item?');
+          if (r == true) {
+            element.remove();
+          }
+        },
+        moveDown(e) {
+          let element = e.target.closest('.editable');
+          if (element.nextElementSibling)
+            element.parentNode.insertBefore(element.nextElementSibling, element);
+        },
+        toggleMode() {
+          if (this.editing == true) {
+            this.editing = false;
+            document.querySelectorAll('.edit').forEach(function(e) {
+              e.removeAttribute("contenteditable");
+            })
+          } else {
+            this.editing = true;
+            document.querySelectorAll('.edit').forEach(function(e) {
+              e.contentEditable = "true";
+            })
+          }
+        }
+      },
+      created: function() {
+
+        let app = this;
+        fetch(this.theme + 'layouts.html')
+          .then(response => response.text())
+          .then(function(html) {
+
+            document.getElementById('layouts').innerHTML = html;
+            setTimeout(function() {
+
+              document.querySelectorAll('template').forEach(function(e) {
+                let mylayout = e.id;
+                app.layouts.push(mylayout);
+              })
+            }, 5);
+
+          });
+
+
+      }
+
+    });
+  </script>
+
+</body>
+
+</html>
