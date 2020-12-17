@@ -104,8 +104,23 @@ body{
 
 .editable{
   position: relative;
+
 }
 
+.editing .editable{
+  border: 1px solid transparent;
+}
+
+.editing .editable:hover{
+  border: 1px dashed #777;
+  cursor: pointer;
+}
+
+.editing .current-item{
+  border: 1px dashed #777;
+}
+
+/*
 .editing .edit-bg, .editing .edit-img, .editing .edit{
   border: 1px solid transparent;
 }
@@ -114,6 +129,7 @@ body{
   border: 1px dashed #777;
   cursor: pointer;
 }
+*/
 
 /*---- Switch ----*/
 

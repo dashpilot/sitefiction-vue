@@ -55,6 +55,8 @@
           <div class="alert alert-warning">Click on text or images to edit</div>
         </span>
 
+        <br><br><br><br>
+
       </div>
       <div class="col-10" id="sf-content">
 
@@ -96,7 +98,6 @@
         theme: 'themes/landing-page/',
         editing: false,
         edit_img: false,
-        nav: false,
         layouts: [],
         headers: [],
         items: []
@@ -129,14 +130,22 @@
             let app = this;
 
             document.body.addEventListener('click', function(e) {
-              if (e.target.classList.contains('edit-bg')) {
-                app.edit_img = e.target;
-              } else if (e.target.classList.contains('edit-img')) {
-                app.edit_img = e.target;
-              } else if (e.target.closest('#sf-side')) {
-                // dont' close when clicking on the target itself
-              } else {
+              if (e.target.closest('.editable')) {
+                document.querySelectorAll('.current-item').forEach(function(e) {
+                  e.classList.remove('current-item');
+                })
+                e.target.closest('.editable').classList.add('current-item');
                 app.edit_img = false;
+                if (e.target.closest('.editable').querySelector('.edit-bg')) {
+                  setTimeout(function() {
+                    app.edit_img = e.target.closest('.editable').querySelector('.edit-bg');
+                  }, 5)
+                }
+                if (e.target.closest('.editable').querySelector('.edit-img')) {
+                  setTimeout(function() {
+                    app.edit_img = e.target.closest('.editable').querySelector('.edit-img');
+                  }, 5)
+                }
               }
             })
           }
@@ -148,6 +157,7 @@
       },
       created: function() {
 
+        // load the template
         let app = this;
         fetch(this.theme + 'layouts.html')
           .then(response => response.text())
