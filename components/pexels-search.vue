@@ -78,15 +78,13 @@ module.exports = {
 
       }
     },
-    created: function(){
+    mounted: function(){
+      this.photos = [];
       document.querySelector('#pexels-search').addEventListener('keypress', function (e) {
           if (e.key === 'Enter') {
             document.querySelector('#query-search').click();
           }
       });
-    },
-    mounted: function(){
-      this.photos = [];
     }
 }
 </script>
