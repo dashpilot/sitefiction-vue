@@ -43,7 +43,9 @@
           </div>
         </div>
 
-        <div class="col-3"></div>
+        <div class="col-3">
+          <save-screen></save-screen>
+        </div>
       </div>
 
     </div>
@@ -52,9 +54,15 @@
       <div class="col-2" id="sf-side">
 
         <span v-if="editing == false">
-          <span v-for="layout in layouts">
-            <img :src="theme+'previews/'+layout+'.jpg'" class="img-fluid sf-brdr" v-on:click="addItem(layout)" />
-          </span>
+
+          <transition name="fade">
+            <span v-if="layouts.length > 0">
+              <span v-for="layout in layouts">
+                <img :src="theme+'previews/'+layout+'.jpg'" class="img-fluid sf-brdr" v-on:click="addItem(layout)" />
+              </span>
+            </span>
+          </transition>
+
         </span>
         <span v-else-if="edit_img">
 
@@ -163,7 +171,8 @@
       },
       components: {
         'pexels-search': httpVueLoader('components/pexels-search.vue'),
-        'edit-btns': httpVueLoader('components/edit-btns.vue')
+        'edit-btns': httpVueLoader('components/edit-btns.vue'),
+        'save-screen': httpVueLoader('components/save-screen.vue')
       },
       created: function() {
 
