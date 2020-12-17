@@ -113,11 +113,11 @@ body{
   position: relative;
 }
 
-.editing .edit-bg, .editing .edit{
+.editing .edit-bg, .editing .edit-img, .editing .edit{
   border: 1px solid transparent;
 }
 
-.editing .edit-bg:hover, .editing .edit:not(:focus):hover{
+.editing .edit-bg:hover, .editing .edit-img:hover, .editing .edit:not(:focus):hover{
   border: 1px dashed #777;
   cursor: pointer;
 }
