@@ -3,7 +3,11 @@
   <span v-if="loggedIn == true">
 
 
-  <button class="btn btn-outline-dark mr-2" id="save" v-on:click="save">Save</button>
+  <button class="btn btn-outline-dark mr-2" id="save" v-on:click="save">
+    <span v-if="loading">
+      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> &nbsp;
+    </span>
+  Save</button>
 
 
   <button class="btn btn-outline-dark" id="user" v-on:click="showUser = true">
@@ -51,7 +55,7 @@
 }
 
 #save{
-  width: 80px;
+  width: 100px;
 }
 
 #user{
@@ -62,12 +66,13 @@
 
 <script>
 module.exports = {
-    props: ['editing'],
     data: function() {
         return {
           loggedIn: false,
           displayName: '',
-          showUser: false
+          showUser: false,
+          userId: false,
+          loading: false
         }
     },
     methods: {
@@ -83,6 +88,7 @@ module.exports = {
           console.log(user.displayName);
           app.loggedIn = true;
           app.displayName = user.displayName;
+          app.userId = user.uid;
 
         }).catch(function(error) {
           console.log(error);
@@ -95,6 +101,7 @@ module.exports = {
           app.loggedIn = false;
           app.displayName = '';
           app.showUser = false;
+          app.userId = false;
 
         }).catch(function(error) {
         console.log(error);
@@ -102,12 +109,57 @@ module.exports = {
 
       },
       save(){
-        var ref = firebase.storage().ref().child('data/test.txt');
-        var message = 'This is my message.';
-        ref.putString(message).then(function(snapshot) {
-          console.log('Uploaded a raw string!');
+
+        //this.editing_status = false; // this also updates the parent 'editing' status
+        let app = this;
+
+        app.loading = true;
+
+        // hacky way of triggering the mode change
+        if(document.getElementById('switch-normal').checked == false){
+          document.getElementById('switch-normal').click();
+        }
+
+        document.querySelectorAll('.edit').forEach(function(e){
+          e.removeAttribute('contentEditable');
+        })
+
+
+        setTimeout(function(){
+        var headers = [];
+        document.querySelectorAll('#sf-header .editable').forEach(function(e){
+          headers.push(e.innerHTML);
+        })
+        var contents = [];
+        document.querySelectorAll('#sf-main .editable').forEach(function(e){
+          contents.push(e.innerHTML);
+        })
+
+        firebase.firestore().collection("users").doc(app.userId).set({
+            headers: headers,
+            contents: contents,
+        })
+        .then(function() {
+            console.log("Document successfully written!");
+            app.loading = false;
+            document.querySelectorAll('.edit').forEach(function(e){
+              e.contentEditable = true;
+            })
+        })
+        .catch(function(error) {
+            console.error("Error writing document: ", error);
         });
+      }, 1000);
+
+      },
+      setHeaders: function (value) {
+        this.$emit('update-headers', value);
+      },
+      setContents: function (value) {
+        this.$emit('update-contents', value);
       }
+
+
     },
     mounted: function(){
       let app = this;
@@ -116,6 +168,40 @@ module.exports = {
           // User is signed in.
           app.loggedIn = true;
           app.displayName = user.displayName;
+          app.userId = user.uid;
+
+
+          var docRef = firebase.firestore().collection("users").doc(app.userId);
+
+
+          docRef.get().then(function(doc) {
+              if (doc.exists) {
+                console.log("Document data:", doc.data());
+                var mydoc = doc.data();
+
+                let headers = [];
+                mydoc.headers.forEach(function(item){
+                  headers.push(item);
+                })
+                app.setHeaders(headers);
+
+                let contents = [];
+                mydoc.contents.forEach(function(item){
+                  contents.push(item);
+                })
+                app.setContents(contents);
+              
+              } else {
+                  // doc.data() will be undefined in this case
+                  console.log("No such document!");
+              }
+
+
+          }).catch(function(error) {
+              console.log("Error getting document:", error);
+          });
+
+
         }
       });
     }

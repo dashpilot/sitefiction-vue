@@ -44,11 +44,7 @@
         </div>
 
         <div class="col-3">
-          <!-- <save-screen></save-screen> -->
-
-          <fire-base></fire-base>
-
-
+          <fire-base @update-headers="updateHeaders" @update-contents="updateContents"></fire-base>
         </div>
       </div>
 
@@ -125,6 +121,12 @@
         items: []
       },
       methods: {
+        updateHeaders(value) {
+          this.headers = value
+        },
+        updateContents(value) {
+          this.items = value
+        },
         addItem(layout) {
           let el = document.getElementById(layout);
           let cat = el.getAttribute('data-category');
@@ -205,6 +207,7 @@
   <!-- The core Firebase JS SDK is always required and must be listed first -->
   <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-firestore.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-storage.js"></script>
 
   <script>
