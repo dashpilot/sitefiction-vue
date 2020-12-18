@@ -44,7 +44,11 @@
         </div>
 
         <div class="col-3">
-          <save-screen></save-screen>
+          <!-- <save-screen></save-screen> -->
+
+          <fire-base></fire-base>
+
+
         </div>
       </div>
 
@@ -172,6 +176,7 @@
       components: {
         'pexels-search': httpVueLoader('components/pexels-search.vue'),
         'edit-btns': httpVueLoader('components/edit-btns.vue'),
+        'fire-base': httpVueLoader('components/fire-base.vue'),
         'save-screen': httpVueLoader('components/save-screen.vue')
       },
       created: function() {
@@ -195,6 +200,28 @@
       }
 
     });
+  </script>
+
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-storage.js"></script>
+
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyBzPOBI6YeHpyjDjHqfJD0izkUtQPn6dzE",
+      authDomain: "sitefiction-c1360.firebaseapp.com",
+      projectId: "sitefiction-c1360",
+      storageBucket: "sitefiction-c1360.appspot.com",
+      messagingSenderId: "61720997115",
+      appId: "1:61720997115:web:d776918b65c4eb7f5a545e"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    var provider = new firebase.auth.GoogleAuthProvider();
+    var storage = firebase.storage();
   </script>
 
 </body>
