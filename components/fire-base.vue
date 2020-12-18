@@ -103,6 +103,8 @@ module.exports = {
           app.showUser = false;
           app.userId = false;
 
+          location.reload();
+
         }).catch(function(error) {
         console.log(error);
         });
@@ -190,7 +192,7 @@ module.exports = {
                   contents.push(item);
                 })
                 app.setContents(contents);
-              
+
               } else {
                   // doc.data() will be undefined in this case
                   console.log("No such document!");
