@@ -18,7 +18,7 @@
 
   </span>
   <span v-else>
-  <button class="btn btn-outline-dark float-right" v-on:click="login">Log In</button>
+  <button class="btn btn-outline-dark float-right" v-on:click="login">Log In / Register</button>
   </span>
 
 
